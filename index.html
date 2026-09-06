@@ -24,15 +24,25 @@
         <span>首登興櫃研究台</span>
       </a>
       <nav aria-label="頁面導覽">
+        <a href="#checker">判定</a>
         <a href="#layers">策略</a>
         <a href="#playbook">操作</a>
         <a href="#radar">分點</a>
         <a href="#trades">交易</a>
       </nav>
-      <div class="as-of"><span></span>資料截至 2026.09.04</div>
+      <div class="as-of"><span></span>v1.1 · 資料截至 2026.09.04</div>
     </header>
 
     <main id="top">
+      <section class="live-monitor reveal" id="live">
+        <div class="live-title">
+          <div><span class="live-pulse"></span><span class="kicker">NOW · CURRENT CAMPAIGNS</span><h2>目前標的與執行階段</h2></div>
+          <p>盤後狀態 · 2026.09.04</p>
+        </div>
+        <div id="liveCards" class="live-cards"></div>
+        <div class="live-legend"><span><i class="dot green"></i>持有／條件成立</span><span><i class="dot amber"></i>觀察但不追</span><span><i class="dot red"></i>淘汰／事件結束</span></div>
+      </section>
+
       <section class="hero reveal">
         <div class="eyebrow">EMERGING MARKET · EVENT RESEARCH</div>
         <h1>先讓價量說話，<br /><em>再讓分點確認。</em></h1>
@@ -50,6 +60,24 @@
           <article><span>核心框架</span><strong>3</strong><small>策略層級</small></article>
           <article><span>現行判斷日</span><strong>T+2</strong><small>收盤後確認</small></article>
         </div>
+      </section>
+
+      <section class="section checker reveal" id="checker">
+        <div class="section-heading">
+          <div><span class="kicker">00 · SIGNAL CHECKER</span><h2>T+2 快速判定器</h2></div>
+          <p>輸入收盤後已知資料，立即判斷是否符合凍結的價量規則；結果不使用未來資料。</p>
+        </div>
+        <form id="signalForm" class="checker-grid">
+          <label><span>T+1 漲跌</span><div><input id="r1" type="number" step="0.1" value="-6.9" /><b>%</b></div></label>
+          <label><span>T+2 漲跌</span><div><input id="r2" type="number" step="0.1" value="15.9" /><b>%</b></div></label>
+          <label><span>V1 / V0</span><div><input id="vr1" type="number" step="0.01" value="0.28" /><b>×</b></div></label>
+          <label><span>V2 / V1</span><div><input id="vr2" type="number" step="0.01" value="0.82" /><b>×</b></div></label>
+          <label><span>C2 / C0</span><div><input id="c2c0" type="number" step="0.01" value="1.08" /><b>×</b></div></label>
+          <label><span>CLV2</span><div><input id="clv2" type="number" step="0.01" min="0" max="1" value="0.70" /><b>0–1</b></div></label>
+          <label><span>T0 雷達數</span><div><input id="radarHits" type="number" step="1" min="0" max="5" value="3" /><b>家</b></div></label>
+          <button class="button primary checker-button" type="submit">執行判定</button>
+        </form>
+        <div id="signalResult" class="signal-result" aria-live="polite"></div>
       </section>
 
       <section class="section reveal" id="layers">
