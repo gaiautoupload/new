@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="首登興櫃價量與分點策略研究儀表板" />
+    <meta name="theme-color" content="#0b1512" />
+    <meta property="og:title" content="首登興櫃策略研究台" />
+    <meta property="og:description" content="價量 × 分點 × 時間：首登興櫃事件策略研究" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://gaiautoupload.github.io/new/" />
+    <meta property="og:image" content="https://gaiautoupload.github.io/new/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>首登興櫃策略研究台</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-a"></div>
+    <div class="ambient ambient-b"></div>
+
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="回到頁首">
+        <span class="brand-mark">EM</span>
+        <span>首登興櫃研究台</span>
+      </a>
+      <nav aria-label="頁面導覽">
+        <a href="#layers">策略</a>
+        <a href="#playbook">操作</a>
+        <a href="#radar">分點</a>
+        <a href="#trades">交易</a>
+      </nav>
+      <div class="as-of"><span></span>資料截至 2026.09.04</div>
+    </header>
+
+    <main id="top">
+      <section class="hero reveal">
+        <div class="eyebrow">EMERGING MARKET · EVENT RESEARCH</div>
+        <h1>先讓價量說話，<br /><em>再讓分點確認。</em></h1>
+        <p class="hero-copy">
+          一套針對首登興櫃的事件策略。T0建立基準、T+2確認承接，
+          分點只作增益，不替價格做決定。
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#playbook">查看操作流程</a>
+          <button class="button ghost" id="methodButton" type="button">研究方法</button>
+        </div>
+        <div class="hero-grid" aria-label="研究摘要">
+          <article><span>近一年母體</span><strong>95</strong><small>首登事件</small></article>
+          <article><span>完整觀察</span><strong>89</strong><small>T+15樣本</small></article>
+          <article><span>核心框架</span><strong>3</strong><small>策略層級</small></article>
+          <article><span>現行判斷日</span><strong>T+2</strong><small>收盤後確認</small></article>
+        </div>
+      </section>
+
+      <section class="section reveal" id="layers">
+        <div class="section-heading">
+          <div><span class="kicker">01 · STRATEGY LAYERS</span><h2>三套策略，分開計分</h2></div>
+          <p>交叉版必須證明自己比純價量多創造價值，不能把兩者績效混在一起。</p>
+        </div>
+        <div class="layer-switch" role="tablist" aria-label="策略版本">
+          <button role="tab" aria-selected="true" data-layer="baseline">01 基礎價量</button>
+          <button role="tab" aria-selected="false" data-layer="broker">02 純分點</button>
+          <button role="tab" aria-selected="false" data-layer="cross">03 交叉策略</button>
+        </div>
+        <div id="layerPanel" class="layer-panel" aria-live="polite"></div>
+      </section>
+
+      <section class="section reveal" id="playbook">
+        <div class="section-heading">
+          <div><span class="kicker">02 · EXECUTION</span><h2>從觀察到退出</h2></div>
+          <p>所有盤後資料發出的訊號，都在下一交易日成交，避免回測偷看。</p>
+        </div>
+        <div class="timeline">
+          <article class="time-card"><b>00</b><span>T0</span><h3>建立基準</h3><p>記錄價格區間、最後成交價、VWAP、首日量與BR雷達。</p></article>
+          <article class="time-card"><b>01</b><span>T+1</span><h3>辨認洗盤</h3><p>排除跌幅超過15%的破壞，也不追成交失控的噴出。</p></article>
+          <article class="time-card featured"><b>02</b><span>T+2</span><h3>確認進場</h3><p>洗盤收復或強勢整理成立，下一日才執行買進。</p></article>
+          <article class="time-card"><b>03</b><span>T+3～8</span><h3>持有主升</h3><p>監控最高收盤回撤與前三大持有分點的同步轉賣。</p></article>
+          <article class="time-card"><b>09</b><span>T+9</span><h3>事件到期</h3><p>未提前退出則強制結束，不把事件交易變成長期套牢。</p></article>
+        </div>
+        <div class="rule-grid">
+          <article><span class="rule-tag green">A型</span><h3>洗盤收復</h3><ul><li>T+1：-15%～0%</li><li>T+2：+3%～+20%</li><li>V1/V0 ≤ 0.75</li><li>CLV2 ≥ 0.55</li></ul></article>
+          <article><span class="rule-tag amber">B型</span><h3>強勢整理</h3><ul><li>T+1：0%～+20%</li><li>T+2：-5%～+3%</li><li>V2/V1 ≤ 0.70</li><li>T+2仍高於T0</li></ul></article>
+          <article><span class="rule-tag red">退出</span><h3>三重風控</h3><ul><li>最高收盤回撤8%</li><li>前三大中至少兩家派發</li><li>最晚T+9執行退出</li></ul></article>
+        </div>
+      </section>
+
+      <section class="section reveal radar-section" id="radar">
+        <div class="section-heading">
+          <div><span class="kicker">03 · BROKER RADAR</span><h2>多分點雷達</h2></div>
+          <p>分點是行為節點，不代表已確認的共同實益所有人。</p>
+        </div>
+        <div class="radar-layout">
+          <div>
+            <div class="radar-head"><span>匿名分點</span><span>歷史暴漲命中</span></div>
+            <div id="brokerList" class="broker-list"></div>
+          </div>
+          <div class="consensus-card">
+            <span class="kicker">CONSENSUS EFFECT</span>
+            <h3>同時出現，訊號升級</h3>
+            <div id="consensusBars" class="consensus-bars"></div>
+            <p class="fine-print">此為同批資料的描述性結果；新五BR組合須由下一檔首登股票開始前瞻驗證。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal" id="trades">
+        <div class="section-heading">
+          <div><span class="kicker">04 · TRADE LEDGER</span><h2>交叉策略交易簿</h2></div>
+          <div class="trade-filter" role="group" aria-label="交易篩選">
+            <button class="active" data-filter="all">全部</button>
+            <button data-filter="win">獲利</button>
+            <button data-filter="loss">虧損</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>標的</th><th>首登日</th><th>進場</th><th>退出</th><th>原因</th><th class="right">報酬</th></tr></thead>
+            <tbody id="tradeRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="caution reveal">
+        <span>RESEARCH STATUS</span>
+        <h2>現在是候選策略，還不是成功策略。</h2>
+        <p>交叉版目前只有10筆已平倉交易；時間外驗證3筆、另有1筆未平倉。成交壓力測試明顯變差，因此應繼續凍結規則、累積新樣本，而不是回頭調高歷史勝率。</p>
+      </section>
+    </main>
+
+    <footer><span>首登興櫃策略研究台</span><span>研究用途 · 非投資建議</span></footer>
+
+    <dialog id="methodDialog">
+      <button class="dialog-close" aria-label="關閉" type="button">×</button>
+      <span class="kicker">METHODOLOGY</span>
+      <h2>如何避免把回測做得太漂亮</h2>
+      <ol><li>只使用訊號當時已公布的資料。</li><li>盤後訊號一律下一交易日成交。</li><li>訓練期與時間外驗證分開。</li><li>BR候選必須升降級，失敗案例保留。</li><li>未成熟與未平倉案例不算勝利。</li></ol>
+    </dialog>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
