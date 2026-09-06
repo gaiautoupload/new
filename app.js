@@ -58,13 +58,15 @@ function classifySignal(values) {
   if (r2 > 20) return { tone: "red", code: "OVERHEAT", title: "續強過熱，不追價", note: `T+2單日上漲 ${r2.toFixed(1)}%，超過20%追價上限。`, radar };
   const typeA = r1 > -15 && r1 < 0 && r2 >= 3 && r2 <= 20 && vr1 <= .75 && c2c0 >= .9 && clv2 >= .55;
   const typeB = r1 >= 0 && r1 <= 20 && r2 >= -5 && r2 <= 3 && vr1 <= .75 && vr2 <= .70 && c2c0 >= 1;
+  const typeCWatch = r1 >= -10 && r1 < 0 && r2 >= -8 && r2 <= 2 && vr1 <= .60 && vr2 <= .75 && c2c0 >= .90;
   if (typeA) return { tone: "green", code: "TYPE A", title: "洗盤收復型成立", note: "T+2收盤確認；依回測紀律於下一交易日評估成交。", radar };
   if (typeB) return { tone: "amber", code: "TYPE B", title: "強勢整理型成立", note: "價格守住T0且成交量再次收斂；下一交易日評估成交。", radar };
+  if (typeCWatch) return { tone: "amber", code: "C WATCH", title: "延遲突破準備名單", note: "尚未買進；還要確認T+2高於VWAP、主要買方留存，並等待T+3～T+5收復T0。C型目前只作紙上追蹤。", radar };
   const misses = [];
   if (vr1 > .75) misses.push("V1/V0過高");
   if (clv2 < .55) misses.push("CLV2偏低");
   if (c2c0 < .9) misses.push("未守住T0價格區");
-  if (!misses.length) misses.push("漲跌幅組合不屬於A/B型");
+  if (!misses.length) misses.push("漲跌幅組合不屬於A/B/C型");
   return { tone: "muted", code: "WAIT", title: "條件不足，暫不進場", note: misses.join("、") + "。", radar };
 }
 

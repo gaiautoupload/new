@@ -30,7 +30,7 @@
         <a href="#radar">分點</a>
         <a href="#trades">交易</a>
       </nav>
-      <div class="as-of"><span></span>v1.1 · 資料截至 2026.09.04</div>
+      <div class="as-of"><span></span>v1.2 · 資料截至 2026.09.04</div>
     </header>
 
     <main id="top">
@@ -47,7 +47,7 @@
         <div class="eyebrow">EMERGING MARKET · EVENT RESEARCH</div>
         <h1>先讓價量說話，<br /><em>再讓分點確認。</em></h1>
         <p class="hero-copy">
-          一套針對首登興櫃的事件策略。T0建立基準、T+2確認承接，
+          一套針對首登興櫃的事件策略。A/B型在T+2確認，C型於T+3～T+5等待延遲突破，
           分點只作增益，不替價格做決定。
         </p>
         <div class="hero-actions">
@@ -58,7 +58,7 @@
           <article><span>近一年母體</span><strong>95</strong><small>首登事件</small></article>
           <article><span>完整觀察</span><strong>89</strong><small>T+15樣本</small></article>
           <article><span>核心框架</span><strong>3</strong><small>策略層級</small></article>
-          <article><span>現行判斷日</span><strong>T+2</strong><small>收盤後確認</small></article>
+          <article><span>判斷窗口</span><strong>T+2～5</strong><small>C型仍在紙上驗證</small></article>
         </div>
       </section>
 
@@ -108,6 +108,7 @@
         <div class="rule-grid">
           <article><span class="rule-tag green">A型</span><h3>洗盤收復</h3><ul><li>T+1：-15%～0%</li><li>T+2：+3%～+20%</li><li>V1/V0 ≤ 0.75</li><li>CLV2 ≥ 0.55</li></ul></article>
           <article><span class="rule-tag amber">B型</span><h3>強勢整理</h3><ul><li>T+1：0%～+20%</li><li>T+2：-5%～+3%</li><li>V2/V1 ≤ 0.70</li><li>T+2仍高於T0</li></ul></article>
+          <article><span class="rule-tag amber">C型・研究中</span><h3>吸收後延遲突破</h3><ul><li>T+2量縮且主要買方留存</li><li>T+3～5收復T0價格</li><li>Last/VWAP、CLV與分點同步確認</li><li>下一日才作紙上進場</li></ul></article>
           <article><span class="rule-tag red">退出</span><h3>三重風控</h3><ul><li>最高收盤回撤8%</li><li>前三大中至少兩家派發</li><li>最晚T+9執行退出</li></ul></article>
         </div>
       </section>
@@ -164,7 +165,7 @@
       <ol><li>只使用訊號當時已公布的資料。</li><li>盤後訊號一律下一交易日成交。</li><li>訓練期與時間外驗證分開。</li><li>BR候選必須升降級，失敗案例保留。</li><li>未成熟與未平倉案例不算勝利。</li></ol>
     </dialog>
 
-    <script src="data.js?v=1.1"></script>
-    <script src="app.js?v=1.1"></script>
+    <script src="data.js?v=1.2"></script>
+    <script src="app.js?v=1.2"></script>
   </body>
 </html>

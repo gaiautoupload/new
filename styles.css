@@ -116,7 +116,7 @@ h1 em { color: var(--green); font-style: normal; font-weight: 500; }
 .time-card > span { color: var(--green); font: 22px Georgia, serif; }
 .time-card h3 { margin-top: 65px; }
 .time-card p { color: var(--muted); font-size: 13px; }
-.rule-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+.rule-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 12px; }
 .rule-grid article { border: 1px solid var(--line); border-radius: 18px; padding: 24px; }
 .rule-grid h3 { margin: 14px 0 8px; }
 .rule-grid ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14px; }

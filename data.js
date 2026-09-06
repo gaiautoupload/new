@@ -1,15 +1,15 @@
 window.STRATEGY_DATA = {
   live: [
     { id:"7914", name:"碩明綠能", t:7, stage:"持有監控", tone:"green", last:38.0, fromT0:-4.0, radar:0, holderShare:57.5, flow:43.0, detail:"A型於T+2成立，T+3進場；前三大持有者目前仍為淨買。" },
-    { id:"7686", name:"捷立康", t:4, stage:"雷達觀察・不追", tone:"amber", last:802.0, fromT0:54.2, radar:2, holderShare:33.0, flow:8.6, detail:"T0有2家候選BR，但T+2價量未成立；後續噴出不回補訊號。" },
-    { id:"7932", name:"昱鐳應材", t:5, stage:"未進場觀察", tone:"amber", last:404.5, fromT0:2.4, radar:1, holderShare:44.6, flow:6.7, detail:"T+2跌幅略超過B型範圍；目前回到T0上方，保留為反例樣本。" },
+    { id:"7686", name:"捷立康", t:4, stage:"C型回溯命中・不追", tone:"amber", last:802.0, fromT0:54.2, radar:2, holderShare:33.0, flow:8.6, detail:"T+2吸收、T+3突破；規則形成後才辨識，不補記買進，也不算績效。" },
+    { id:"7932", name:"昱鐳應材", t:5, stage:"C型確認・待前瞻", tone:"green", last:404.5, fromT0:2.4, radar:1, holderShare:44.6, flow:6.7, detail:"T+2吸收、T+5確認；T+6才是凍結規則後第一個紙上執行點。" },
     { id:"6950", name:"科科科技-KY", t:4, stage:"價量淘汰", tone:"red", last:24.9, fromT0:-11.5, radar:0, holderShare:22.0, flow:14.2, detail:"T+2續跌且量比放大，未通過A/B型；即使分點承接也不單獨買。" },
     { id:"7945", name:"廣盛科技", t:11, stage:"事件結束", tone:"red", last:214.0, fromT0:-27.5, radar:0, holderShare:25.4, flow:23.1, detail:"T+2價量結構未成立，且已超過T+9事件期限。" }
   ],
   layers: {
     baseline: { number: "01", name: "基礎價量", label: "核心對照組", tone: "green", mean: 11.9, median: 11.3, winRate: 70.0, closed: 10, open: 1, description: "只依T0～T+2價格與相對量進場；退出採8%收盤回撤與T+9事件期限。", verdict: "主要Alpha來源" },
     broker: { number: "02", name: "純分點", label: "研究控制組", tone: "red", mean: -1.5, median: -1.7, winRate: 46.2, closed: 13, open: 2, description: "不使用v0.5價量型態，單靠買方集中、前三大持有者與淨買行為發出訊號。", verdict: "不可獨立使用" },
-    cross: { number: "03", name: "價量 × 分點", label: "現行候選", tone: "amber", mean: 12.3, median: 11.3, winRate: 70.0, closed: 10, open: 1, description: "價量決定進場資格，BR雷達負責排序，持有分點共同派發可提前退出。", verdict: "目前最佳架構" }
+    cross: { number: "03", name: "價量 × 分點", label: "現行候選", tone: "amber", mean: 12.3, median: 11.3, winRate: 70.0, closed: 10, open: 1, description: "價量決定進場資格，BR雷達負責排序，持有分點共同派發可提前退出；C型尚未併入績效。", verdict: "目前最佳架構" }
   },
   brokers: [
     { id: "BR-0EC3E025", status: "核心", hits: 6, total: 16, precision: 37.5 },
