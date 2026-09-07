@@ -1,4 +1,15 @@
 const data = window.STRATEGY_DATA;
+const daily = window.DAILY_STRATEGY;
+if (daily) {
+  data.live = daily.live;
+  data.trades = daily.trades;
+  for (const key of Object.keys(daily.layers)) Object.assign(data.layers[key], daily.layers[key]);
+  document.querySelector('.as-of').textContent = `v1.3 · 行情 ${daily.priceDate} · 籌碼 ${daily.brokerDate}`;
+  document.querySelector('.live-title p').textContent = `產生時間 ${daily.generated}`;
+  document.querySelector('#dailyNotice').textContent = `🆕 今日新登錄興櫃｜${daily.today}：${daily.todayListingStatus} 下方列出最新資料日仍在T0～T+25的標的；歷史BR雷達統計截至9/4，未冒充今日雷達。`;
+  document.querySelector('#population').textContent = daily.eventCount;
+  document.querySelector('#mature').textContent = daily.matureCount;
+}
 
 document.querySelector("#liveCards").innerHTML = data.live.map((stock) => `
   <article class="live-card ${stock.tone}">
@@ -6,7 +17,7 @@ document.querySelector("#liveCards").innerHTML = data.live.map((stock) => `
     <div class="stock-name"><div><h3>${stock.name}</h3><small>${stock.id}</small></div><strong>${stock.last.toLocaleString()}</strong></div>
     <div class="live-metrics">
       <span>較T0<strong class="${stock.fromT0 >= 0 ? "positive" : "negative"}">${stock.fromT0 > 0 ? "+" : ""}${stock.fromT0}%</strong></span>
-      <span>BR雷達<strong>${stock.radar}家</strong></span>
+      <span>BR雷達<strong>${stock.radar}${typeof stock.radar === 'number' ? '家' : ''}</strong></span>
       <span>前三大持有<strong>${stock.holderShare}%</strong></span>
     </div>
     <p>${stock.detail}</p>
