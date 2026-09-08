@@ -65,7 +65,7 @@
           <article><span>近一年母體</span><strong id="population">95</strong><small>首登事件</small></article>
           <article><span>完整觀察</span><strong id="mature">89</strong><small>T+15樣本</small></article>
           <article><span>核心框架</span><strong>3</strong><small>策略層級</small></article>
-          <article><span>判斷窗口</span><strong>T+2～5</strong><small>C型仍在紙上驗證</small></article>
+          <article><span>判斷窗口</span><strong>T+2～5</strong><small>C型正式採用</small></article>
         </div>
       </section>
 
@@ -115,7 +115,7 @@
         <div class="rule-grid">
           <article><span class="rule-tag green">A型</span><h3>洗盤收復</h3><ul><li>-15% &lt; T+1漲跌 &lt; 0%</li><li>T+2：+3%～+20%（含邊界）</li><li>V1/V0 ≤ 0.75</li><li>C2/C0 ≥ 0.90</li><li>CLV2 ≥ 0.55</li></ul></article>
           <article><span class="rule-tag amber">B型</span><h3>強勢整理</h3><ul><li>T+1：0%～+20%（含邊界）</li><li>T+2：-5%～+3%（含邊界）</li><li>V1/V0 ≤ 0.75</li><li>V2/V1 ≤ 0.70</li><li>C2/C0 ≥ 1.00</li></ul></article>
-          <article><span class="rule-tag amber">C型・研究中</span><h3>吸收後延遲突破</h3><ul><li>T+2量縮且主要買方留存</li><li>T+3～5收復T0價格</li><li>Last/VWAP、CLV與分點同步確認</li><li>下一日才作紙上進場</li></ul></article>
+          <article><span class="rule-tag amber">C型・正式策略</span><h3>吸收後延遲突破</h3><ul><li>T+2量縮且主要買方留存</li><li>T+3～5收復T0價格</li><li>Last/VWAP、CLV與分點同步確認</li><li>完整確認後次日執行</li></ul></article>
           <article><span class="rule-tag red">退出</span><h3>三重風控</h3><ul><li>最高收盤回撤8%</li><li>前三大中至少兩家派發</li><li>最晚T+9執行退出</li></ul></article>
         </div>
       </section>
@@ -125,10 +125,10 @@
         <div class="table-wrap"><table><thead><tr><th>階段</th><th>每日執行內容</th><th>定位</th></tr></thead><tbody>
           <tr><td>T0</td><td>首登候選特別標記、價量與分點基準；正式登錄日期待官方核對者明列</td><td>觀察</td></tr>
           <tr><td>T+1</td><td>記錄漲跌、V1/V0；等待完整T+2</td><td>觀察，不提前買進</td></tr>
-          <tr><td>T+2 → T+3</td><td>A/B完整條件判定；次交易日模擬成交</td><td>凍結候選規則</td></tr>
-          <tr><td>T+3～5 → T+4～6</td><td>C型延遲突破確認、次日紙上執行</td><td>研究中，不併入A/B勝率</td></tr>
+          <tr><td>T+2 → T+3</td><td>A/B完整條件判定；次交易日模擬成交</td><td>正式採用規則</td></tr>
+          <tr><td>T+3～5 → T+4～6</td><td>C型延遲突破確認、次日執行</td><td>正式採用，與A/B分開統計</td></tr>
           <tr><td>T+3～9</td><td>A/B持有期回撤8%、交叉版分點派發；T+8發出到期訊號、T+9執行</td><td>短線退出</td></tr>
-          <tr><td>C型最晚T+10</td><td>C型T+9發出到期訊號，次交易日執行；不套用A/B的T+9期限</td><td>紙上退出</td></tr>
+          <tr><td>C型最晚T+10</td><td>C型T+9發出到期訊號，次交易日執行；不套用A/B的T+9期限</td><td>策略退出</td></tr>
           <tr><td>T+5／10／15</td><td>固定觀察報酬及MFE／MAE，與可執行退出績效分開</td><td>回測觀察點</td></tr>
           <tr><td>T+25以內</td><td>目前名單追蹤；D型尚未升級</td><td>探索</td></tr>
           <tr><td>10x長期策略</td><td>主力建倉、群組擴張與庫存退出整合尚未完成驗證</td><td>未啟用自動進出場</td></tr>
@@ -172,7 +172,7 @@
 
       <section class="caution reveal">
         <span>RESEARCH STATUS</span>
-        <h2>現在是候選策略，還不是成功策略。</h2>
+        <h2>正式採用複合策略，持續驗證成效。</h2>
         <p>最新已平倉與未平倉數見上方策略分層。C型包含事後形成的案例，10x整合仍待驗證；未平倉不得算成成功交易。日K模擬成交不是實際委託成交紀錄。</p>
       </section>
       </details>
@@ -189,7 +189,7 @@
     </dialog>
 
     <script src="data.js?v=1.3"></script>
-    <script src="daily.js?v=1.4"></script>
-    <script src="app.js?v=1.4"></script>
+    <script src="daily.js?v=1.6"></script>
+    <script src="app.js?v=1.6"></script>
   </body>
 </html>

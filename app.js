@@ -1,5 +1,8 @@
 const data = window.STRATEGY_DATA;
 const daily = window.DAILY_STRATEGY;
+data.layers.cross.label = '正式執行策略';
+data.layers.cross.verdict = '已採用，持續驗證';
+data.layers.cross.description = 'A/B價量與分點退出正式執行；C型複合條件亦正式採用，獨立記錄。採用前交易仍屬回溯模擬。';
 if (daily) {
   data.live = daily.live;
   data.trades = daily.trades;
@@ -7,7 +10,7 @@ if (daily) {
   document.querySelector('.as-of').textContent = 'v1.4 · 每日策略';
   document.querySelector('#freshness').textContent = `行情 ${daily.priceDate} ｜籌碼 ${daily.brokerDate} ｜研究快照，請核對交易日期`;
   document.querySelector('.live-title p').textContent = `產生時間 ${daily.generated}`;
-  document.querySelector('#dailyNotice').textContent = `🆕 今日新登錄興櫃｜${daily.today}：${daily.todayListingStatus} 下方列出最新資料日仍在T0～T+25的標的；歷史BR雷達統計截至9/4，未冒充今日雷達。`;
+  document.querySelector('#dailyNotice').textContent = `🆕 今日新登錄興櫃｜${daily.today}：${daily.todayListingStatus} BR名單凍結於9/4，買賣明細更新至${daily.brokerDate}；舊標的標為回溯觀察。`;
   document.querySelector('#population').textContent = daily.eventCount;
   document.querySelector('#mature').textContent = daily.matureCount;
 }
@@ -23,7 +26,7 @@ function nextStep(stock) {
   if (/退出訊號/.test(stock.stage)) return '下一交易日：依退出規則評估成交';
   if (/確認待執行/.test(stock.stage)) return '下一交易日：評估進場與成交價差';
   if (/已退出/.test(stock.stage)) return '本輪已結束，保留交易紀錄';
-  if (/C型/.test(stock.stage)) return '紙上追蹤；查看確認紀錄，尚非實際持倉';
+  if (/C型/.test(stock.stage)) return 'C型正式規則：每日檢查回撤8%、分點派發與T+9到期';
   if (/持有/.test(stock.stage)) return '盤後：檢查回撤、分點派發與到期條件';
   if (stock.t < 2) return '等待T+2完整價量資料';
   return '尚無進場指示，繼續觀察';
@@ -40,10 +43,13 @@ document.querySelector("#liveCards").innerHTML = selected.map((stock) => `
     <div class="next-step">${nextStep(stock)}</div>
     <details class="stock-detail"><summary>價量、籌碼與判定依據</summary><div class="live-metrics">
       <span>較T0<strong class="${stock.fromT0 >= 0 ? "positive" : "negative"}">${stock.fromT0 > 0 ? "+" : ""}${stock.fromT0}%</strong></span>
-      <span>BR雷達<strong>${stock.radar}${typeof stock.radar === 'number' ? '家' : ''}</strong></span>
+      <span>前三日BR命中<strong>${stock.radar == null ? '資料缺漏' : stock.radar}${typeof stock.radar === 'number' ? '/5家' : ''}</strong></span>
       <span>前三大持有<strong>${stock.holderShare}%</strong></span>
     </div>
-    <p>${stock.detail}</p></details>
+    <p>${stock.detail}</p>
+    <p>${stock.radarMode || ''} · ${stock.radarDate || '日期待確認'}<br>${stock.radarNote || '尚無雷達明細'}</p>
+    ${(stock.radarEvidence || []).map(e => `<p><strong>${e.alias}（${e.role}）</strong><br>前三日淨買 ${e.earlyNetShares.toLocaleString()} 股；最新日淨買 ${e.todayNetShares.toLocaleString()} 股／${Math.round(e.todayNetAmount).toLocaleString()} 元</p>`).join('')}
+    </details>
   </article>`).join("") || '<p class="empty-state">本快照沒有此類標的。</p>';
 }
 renderWatch();
@@ -103,7 +109,7 @@ function classifySignal(values) {
   const typeCWatch = r1 >= -10 && r1 < 0 && r2 >= -8 && r2 <= 2 && vr1 <= .60 && vr2 <= .75 && c2c0 >= .90;
   if (typeA) return { tone: "green", code: "TYPE A", title: "洗盤收復型成立", note: "T+2收盤確認；依回測紀律於下一交易日評估成交。", radar };
   if (typeB) return { tone: "amber", code: "TYPE B", title: "強勢整理型成立", note: "價格守住T0且成交量再次收斂；下一交易日評估成交。", radar };
-  if (typeCWatch) return { tone: "amber", code: "C WATCH", title: "延遲突破準備名單", note: "尚未買進；還要確認T+2高於VWAP、主要買方留存，並等待T+3～T+5收復T0。C型目前只作紙上追蹤。", radar };
+  if (typeCWatch) return { tone: "amber", code: "C SETUP", title: "C型待完整確認", note: "C型已正式採用；此表僅初篩，還需完整VWAP、留倉、分點條件及T+3～T+5突破確認，下一交易日執行。", radar };
   const misses = [];
   if (vr1 > .75) misses.push("V1/V0過高");
   if (clv2 < .55) misses.push("CLV2偏低");
