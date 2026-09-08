@@ -4,24 +4,55 @@ if (daily) {
   data.live = daily.live;
   data.trades = daily.trades;
   for (const key of Object.keys(daily.layers)) Object.assign(data.layers[key], daily.layers[key]);
-  document.querySelector('.as-of').textContent = `v1.3 · 行情 ${daily.priceDate} · 籌碼 ${daily.brokerDate}`;
+  document.querySelector('.as-of').textContent = 'v1.4 · 每日策略';
+  document.querySelector('#freshness').textContent = `行情 ${daily.priceDate} ｜籌碼 ${daily.brokerDate} ｜研究快照，請核對交易日期`;
   document.querySelector('.live-title p').textContent = `產生時間 ${daily.generated}`;
   document.querySelector('#dailyNotice').textContent = `🆕 今日新登錄興櫃｜${daily.today}：${daily.todayListingStatus} 下方列出最新資料日仍在T0～T+25的標的；歷史BR雷達統計截至9/4，未冒充今日雷達。`;
   document.querySelector('#population').textContent = daily.eventCount;
   document.querySelector('#mature').textContent = daily.matureCount;
 }
 
-document.querySelector("#liveCards").innerHTML = data.live.map((stock) => `
+// Counts come directly from the closed rows, matching the backtest definition.
+if (daily) data.layers.cross.closed = data.trades.filter(t => t.status === 'closed').length;
+function category(stock) {
+  if (/待次日|待執行|待進場/.test(stock.stage)) return 'action';
+  if (/持有/.test(stock.stage)) return 'holding';
+  return 'research';
+}
+function nextStep(stock) {
+  if (/退出訊號/.test(stock.stage)) return '下一交易日：依退出規則評估成交';
+  if (/確認待執行/.test(stock.stage)) return '下一交易日：評估進場與成交價差';
+  if (/已退出/.test(stock.stage)) return '本輪已結束，保留交易紀錄';
+  if (/C型/.test(stock.stage)) return '紙上追蹤；查看確認紀錄，尚非實際持倉';
+  if (/持有/.test(stock.stage)) return '盤後：檢查回撤、分點派發與到期條件';
+  if (stock.t < 2) return '等待T+2完整價量資料';
+  return '尚無進場指示，繼續觀察';
+}
+const order = {action:0,holding:1,research:2};
+const stocks = [...data.live].sort((a,b) => order[category(a)]-order[category(b)] || a.t-b.t);
+document.querySelector('#actionSummary').innerHTML = [['action','待處理'],['holding','模擬持有'],['research','研究／觀察']].map(([key,label]) => `<div><strong>${stocks.filter(s=>category(s)===key).length}</strong><span>${label}</span></div>`).join('');
+function renderWatch(filter = 'all') {
+const selected = stocks.filter(s => filter === 'all' || category(s) === filter);
+document.querySelector("#liveCards").innerHTML = selected.map((stock) => `
   <article class="live-card ${stock.tone}">
-    <div class="live-card-top"><span class="stage">${stock.stage}</span><b>T+${stock.t}</b></div>
+    <div class="live-card-top"><span class="stage">${stock.stage}</span><b>${stock.t === 0 ? 'T0' : `T+${stock.t}`}</b></div>
     <div class="stock-name"><div><h3>${stock.name}</h3><small>${stock.id}</small></div><strong>${stock.last.toLocaleString()}</strong></div>
-    <div class="live-metrics">
+    <div class="next-step">${nextStep(stock)}</div>
+    <details class="stock-detail"><summary>價量、籌碼與判定依據</summary><div class="live-metrics">
       <span>較T0<strong class="${stock.fromT0 >= 0 ? "positive" : "negative"}">${stock.fromT0 > 0 ? "+" : ""}${stock.fromT0}%</strong></span>
       <span>BR雷達<strong>${stock.radar}${typeof stock.radar === 'number' ? '家' : ''}</strong></span>
       <span>前三大持有<strong>${stock.holderShare}%</strong></span>
     </div>
-    <p>${stock.detail}</p>
-  </article>`).join("");
+    <p>${stock.detail}</p></details>
+  </article>`).join("") || '<p class="empty-state">本快照沒有此類標的。</p>';
+}
+renderWatch();
+document.querySelectorAll('[data-watch]').forEach(button => button.addEventListener('click', () => {
+  document.querySelectorAll('[data-watch]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+  renderWatch(button.dataset.watch);
+}));
+document.querySelectorAll('[data-open-research], .site-header nav a, .hero-actions a').forEach(link => link.addEventListener('click', () => { document.querySelector('.research-details').open = true; }));
+if (location.hash && location.hash !== '#live' && location.hash !== '#top') document.querySelector('.research-details').open = true;
 
 const layerPanel = document.querySelector("#layerPanel");
 const layerButtons = [...document.querySelectorAll("[data-layer]")];

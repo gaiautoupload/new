@@ -12,7 +12,7 @@
     <meta property="og:image" content="https://gaiautoupload.github.io/new/og.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <title>首登興櫃策略研究台</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=1.4" />
   </head>
   <body>
     <div class="ambient ambient-a"></div>
@@ -39,11 +39,17 @@
           <div><span class="live-pulse"></span><span class="kicker">NOW · CURRENT CAMPAIGNS</span><h2>目前標的與執行階段</h2></div>
           <p>盤後狀態 · 2026.09.04</p>
         </div>
-        <p id="dailyNotice" role="status">每日資料載入中。</p>
+        <div id="freshness" class="freshness" role="status">正在讀取資料日期…</div>
+        <div id="actionSummary" class="action-summary"></div>
+        <details class="new-listings" open><summary>🆕 今日首登核對</summary><p id="dailyNotice">每日資料載入中。</p></details>
+        <div class="watch-filters" id="watchFilters" role="group" aria-label="標的篩選">
+          <button data-watch="all" aria-pressed="true">全部</button><button data-watch="action" aria-pressed="false">待處理</button><button data-watch="holding" aria-pressed="false">持有</button><button data-watch="research" aria-pressed="false">研究／觀察</button>
+        </div>
         <div id="liveCards" class="live-cards"></div>
         <div class="live-legend"><span><i class="dot green"></i>持有／條件成立</span><span><i class="dot amber"></i>觀察但不追</span><span><i class="dot red"></i>淘汰／事件結束</span></div>
       </section>
 
+      <details class="research-details"><summary>展開策略研究、判定器與交易紀錄</summary>
       <section class="hero reveal">
         <div class="eyebrow">EMERGING MARKET · EVENT RESEARCH</div>
         <h1>先讓價量說話，<br /><em>再讓分點確認。</em></h1>
@@ -169,7 +175,9 @@
         <h2>現在是候選策略，還不是成功策略。</h2>
         <p>最新已平倉與未平倉數見上方策略分層。C型包含事後形成的案例，10x整合仍待驗證；未平倉不得算成成功交易。日K模擬成交不是實際委託成交紀錄。</p>
       </section>
+      </details>
     </main>
+    <nav class="mobile-nav" aria-label="手機快速導覽"><a href="#live">每日看板</a><a href="#playbook" data-open-research>操作規則</a><a href="#trades" data-open-research>交易紀錄</a></nav>
 
     <footer><span>首登興櫃策略研究台</span><span>研究用途 · 非投資建議</span></footer>
 
@@ -181,7 +189,7 @@
     </dialog>
 
     <script src="data.js?v=1.3"></script>
-    <script src="daily.js?v=1.3"></script>
-    <script src="app.js?v=1.3"></script>
+    <script src="daily.js?v=1.4"></script>
+    <script src="app.js?v=1.4"></script>
   </body>
 </html>
