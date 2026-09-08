@@ -212,6 +212,10 @@ dialog li { color: var(--muted); margin: 8px 0; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 
+.return-metrics { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
+.return-metrics span { font-size: 14px; color: var(--muted); }
+.return-metrics strong { display: block; font-size: 24px; font-variant-numeric: tabular-nums; }
+.return-basis { display: block; font-size: 12px; color: var(--muted); margin-bottom: 10px; }
 .decision { font-size: 26px; font-weight: 800; margin-bottom: 12px; padding: 10px 14px; border-radius: 10px; }
 .decision-buy { color: var(--green); background: rgba(111,230,173,.12); }
 .decision-sell { color: var(--red); background: rgba(255,129,123,.12); }

@@ -49,9 +49,13 @@ document.querySelector("#liveCards").innerHTML = selected.map((stock) => `
     <div class="decision decision-${category(stock)}">${decision(stock)[0]}</div>
     <div class="live-card-top"><span class="stage">${stock.stage}</span><b>${stock.t === 0 ? 'T0' : `T+${stock.t}`}</b></div>
     <div class="stock-name"><div><h3>${stock.name}</h3><small>${stock.id}</small></div><strong>${stock.last.toLocaleString()}</strong></div>
+    <div class="return-metrics">
+      <span>較T0報酬<strong class="${stock.fromT0 >= 0 ? 'positive' : 'negative'}">${stock.fromT0 > 0 ? '+' : ''}${stock.fromT0}%</strong></span>
+      <span>T0至今最高漲幅<strong class="${stock.peakFromT0 >= 0 ? 'positive' : 'negative'}">${stock.peakFromT0 == null ? '—' : `${stock.peakFromT0 > 0 ? '+' : ''}${stock.peakFromT0}%`}</strong></span>
+    </div>
+    <small class="return-basis">基準：T0最後成交價；最高漲幅含T0盤中高點，非策略實現報酬。</small>
     <div class="next-step">${decision(stock)[1]}<small class="decision-date">依 ${daily ? daily.priceDate : '未確認日期'} 盤後資料判定 · 策略訊號，非實際委託紀錄</small></div>
     <details class="stock-detail"><summary>價量、籌碼與判定依據</summary><div class="live-metrics">
-      <span>較T0<strong class="${stock.fromT0 >= 0 ? "positive" : "negative"}">${stock.fromT0 > 0 ? "+" : ""}${stock.fromT0}%</strong></span>
       <span>前三日BR命中<strong>${stock.radar == null ? '資料缺漏' : stock.radar}${typeof stock.radar === 'number' ? '/5家' : ''}</strong></span>
       <span>前三大持有<strong>${stock.holderShare}%</strong></span>
     </div>
