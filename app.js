@@ -18,9 +18,17 @@ if (daily) {
 // Counts come directly from the closed rows, matching the backtest definition.
 if (daily) data.layers.cross.closed = data.trades.filter(t => t.status === 'closed').length;
 function category(stock) {
-  if (/待次日|待執行|待進場/.test(stock.stage)) return 'action';
-  if (/持有/.test(stock.stage)) return 'holding';
-  return 'research';
+  if (/退出訊號/.test(stock.stage)) return 'sell';
+  if (/確認待執行/.test(stock.stage)) return 'buy';
+  return 'wait';
+}
+function decision(stock) {
+  const key = category(stock);
+  if (key === 'sell') return ['賣出', '已持有者：下一交易日執行退出；未持有者不買'];
+  if (key === 'buy') return ['買進', '新訊號成立：下一交易日執行，先核對成交價差'];
+  if (/持有/.test(stock.stage)) return ['觀望｜續抱', '已持有者續抱；未持有者等待新買點，不追補歷史進場'];
+  if (/已退出/.test(stock.stage)) return ['觀望', '本輪已退出，等待新的進場訊號'];
+  return ['觀望', '買進條件尚未成立，暫不進場'];
 }
 function nextStep(stock) {
   if (/退出訊號/.test(stock.stage)) return '下一交易日：依退出規則評估成交';
@@ -31,16 +39,17 @@ function nextStep(stock) {
   if (stock.t < 2) return '等待T+2完整價量資料';
   return '尚無進場指示，繼續觀察';
 }
-const order = {action:0,holding:1,research:2};
+const order = {sell:0,buy:1,wait:2};
 const stocks = [...data.live].sort((a,b) => order[category(a)]-order[category(b)] || a.t-b.t);
-document.querySelector('#actionSummary').innerHTML = [['action','待處理'],['holding','模擬持有'],['research','研究／觀察']].map(([key,label]) => `<div><strong>${stocks.filter(s=>category(s)===key).length}</strong><span>${label}</span></div>`).join('');
+document.querySelector('#actionSummary').innerHTML = [['buy','買進'],['wait','觀望'],['sell','賣出']].map(([key,label]) => `<div><strong>${stocks.filter(s=>category(s)===key).length}</strong><span>${label}</span></div>`).join('');
 function renderWatch(filter = 'all') {
 const selected = stocks.filter(s => filter === 'all' || category(s) === filter);
 document.querySelector("#liveCards").innerHTML = selected.map((stock) => `
   <article class="live-card ${stock.tone}">
+    <div class="decision decision-${category(stock)}">${decision(stock)[0]}</div>
     <div class="live-card-top"><span class="stage">${stock.stage}</span><b>${stock.t === 0 ? 'T0' : `T+${stock.t}`}</b></div>
     <div class="stock-name"><div><h3>${stock.name}</h3><small>${stock.id}</small></div><strong>${stock.last.toLocaleString()}</strong></div>
-    <div class="next-step">${nextStep(stock)}</div>
+    <div class="next-step">${decision(stock)[1]}<small class="decision-date">依 ${daily ? daily.priceDate : '未確認日期'} 盤後資料判定 · 策略訊號，非實際委託紀錄</small></div>
     <details class="stock-detail"><summary>價量、籌碼與判定依據</summary><div class="live-metrics">
       <span>較T0<strong class="${stock.fromT0 >= 0 ? "positive" : "negative"}">${stock.fromT0 > 0 ? "+" : ""}${stock.fromT0}%</strong></span>
       <span>前三日BR命中<strong>${stock.radar == null ? '資料缺漏' : stock.radar}${typeof stock.radar === 'number' ? '/5家' : ''}</strong></span>

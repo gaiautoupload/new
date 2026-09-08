@@ -212,6 +212,11 @@ dialog li { color: var(--muted); margin: 8px 0; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 
+.decision { font-size: 26px; font-weight: 800; margin-bottom: 12px; padding: 10px 14px; border-radius: 10px; }
+.decision-buy { color: var(--green); background: rgba(111,230,173,.12); }
+.decision-sell { color: var(--red); background: rgba(255,129,123,.12); }
+.decision-wait { color: var(--amber); background: rgba(241,189,106,.08); }
+.decision-date { display: block; color: var(--muted); font-size: 13px; margin-top: 8px; }
 /* Daily working view: actions first, research on demand. */
 .freshness { padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); font-size: 14px; }
 .action-summary { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 16px 0; }

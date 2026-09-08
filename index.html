@@ -12,7 +12,7 @@
     <meta property="og:image" content="https://gaiautoupload.github.io/new/og.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <title>首登興櫃策略研究台</title>
-    <link rel="stylesheet" href="styles.css?v=1.4" />
+    <link rel="stylesheet" href="styles.css?v=1.7" />
   </head>
   <body>
     <div class="ambient ambient-a"></div>
@@ -43,7 +43,7 @@
         <div id="actionSummary" class="action-summary"></div>
         <details class="new-listings" open><summary>🆕 今日首登核對</summary><p id="dailyNotice">每日資料載入中。</p></details>
         <div class="watch-filters" id="watchFilters" role="group" aria-label="標的篩選">
-          <button data-watch="all" aria-pressed="true">全部</button><button data-watch="action" aria-pressed="false">待處理</button><button data-watch="holding" aria-pressed="false">持有</button><button data-watch="research" aria-pressed="false">研究／觀察</button>
+          <button data-watch="all" aria-pressed="true">全部</button><button data-watch="buy" aria-pressed="false">買進</button><button data-watch="wait" aria-pressed="false">觀望</button><button data-watch="sell" aria-pressed="false">賣出</button>
         </div>
         <div id="liveCards" class="live-cards"></div>
         <div class="live-legend"><span><i class="dot green"></i>持有／條件成立</span><span><i class="dot amber"></i>觀察但不追</span><span><i class="dot red"></i>淘汰／事件結束</span></div>
@@ -190,6 +190,6 @@
 
     <script src="data.js?v=1.3"></script>
     <script src="daily.js?v=1.6"></script>
-    <script src="app.js?v=1.6"></script>
+    <script src="app.js?v=1.7"></script>
   </body>
 </html>
